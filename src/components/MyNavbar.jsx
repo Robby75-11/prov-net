@@ -16,8 +16,7 @@ const MyNavbar = () => {
           <Nav.Link active className="font-weight-bold" href="/">
             Home
           </Nav.Link>
-          <Link to="/">
-            tv-shows">TV Shows className="font-weight-bold" href="/"
+          <Link to="/">tv-shows"<TV Shows 
           </Link>
           <Nav.Link className="font-weight-bold" href="/">
             Movies
