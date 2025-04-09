@@ -5,9 +5,11 @@ import MyFooter from "./MyFooter";
 import MovieList from "./MovieList";
 import CommentArea from "./CommentArea";
 
-class TVShows extends Component {
+class HomePage extends Component {
   state = {
-    gallery: [],
+    gallery1: [],
+    gallery2: [],
+    gallery3: [],
     searchString: "",
     loading: true,
     error: false,
@@ -21,15 +23,35 @@ class TVShows extends Component {
   };
 
   fetchMovies = () => {
-    fetch(this.OMDB_URL + "&s=lost&type=series")
-      .then((response) => response.json())
-      .then((responseObject) => {
-        if (responseObject.Response === "True") {
-          this.setState({ gallery: responseObject.Search });
-        } else {
-          this.setState({ error: true });
-        }
-      })
+    Promise.all([
+      fetch(this.OMDB_URL + "&s=harry%20potter")
+        .then((response) => response.json())
+        .then((responseObject) => {
+          if (responseObject.Response === "True") {
+            this.setState({ gallery1: responseObject.Search });
+          } else {
+            this.setState({ error: true });
+          }
+        }),
+      fetch(this.OMDB_URL + "&s=avengers")
+        .then((response) => response.json())
+        .then((responseObject) => {
+          if (responseObject.Response === "True") {
+            this.setState({ gallery2: responseObject.Search });
+          } else {
+            this.setState({ error: true });
+          }
+        }),
+      fetch(this.OMDB_URL + "&s=star%20wars")
+        .then((response) => response.json())
+        .then((responseObject) => {
+          if (responseObject.Response === "True") {
+            this.setState({ gallery3: responseObject.Search });
+          } else {
+            this.setState({ error: true });
+          }
+        }),
+    ])
       .then(() => this.setState({ loading: false }))
       .catch((err) => {
         this.setState({ error: true });
@@ -48,7 +70,7 @@ class TVShows extends Component {
         <Container fluid className="px-4">
           <div className="d-flex justify-content-between">
             <div className="d-flex">
-              <h2 className="mb-4">TV Shows</h2>
+              <h2 className="mb-4">Movies</h2>
               <div className="me-4 mt-1">
                 <Dropdown>
                   <Dropdown.Toggle
@@ -94,7 +116,27 @@ class TVShows extends Component {
                   <MovieList
                     title="Harry Potter"
                     loading={this.state.loading}
-                    movies={this.state.gallery.slice(0, 6)}
+                    movies={this.state.gallery1.slice(0, 6)}
+                    changeSelectedMovie={(movieId) =>
+                      this.setState({
+                        selectedMovie: movieId,
+                      })
+                    }
+                  />
+                  <MovieList
+                    title="The Avengers"
+                    loading={this.state.loading}
+                    movies={this.state.gallery2.slice(0, 6)}
+                    changeSelectedMovie={(movieId) =>
+                      this.setState({
+                        selectedMovie: movieId,
+                      })
+                    }
+                  />
+                  <MovieList
+                    title="Star Wars"
+                    loading={this.state.loading}
+                    movies={this.state.gallery3.slice(0, 6)}
                     changeSelectedMovie={(movieId) =>
                       this.setState({
                         selectedMovie: movieId,
@@ -115,4 +157,4 @@ class TVShows extends Component {
   }
 }
 
-export default TVShows;
+export default HomePage;
