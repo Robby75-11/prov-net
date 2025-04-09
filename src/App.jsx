@@ -6,9 +6,7 @@ import { Container, Alert, Dropdown } from "react-bootstrap";
 import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
 import MovieList from "./components/MovieList";
-import { Router, Routes, Route } from "react-router-dom";
-import TVShows from "./components/TVShows";
-import MovieDetails from "./components/MovieDetails";
+
 const App = () => {
   const [gallery1, setGallery1] = useState([]);
   const [gallery2, setGallery2] = useState([]);
@@ -16,7 +14,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const OMDB_URL = "http://www.omdbapi.com/?apikey=d02e1f58&i";
+  const OMDB_URL = "http://www.omdbapi.com/?apikey=24ad60e9";
 
   useEffect(() => {
     fetchMovies();
@@ -58,13 +56,7 @@ const App = () => {
         console.log("An error has occurred:", err);
       });
   };
-  <Router>
-    <Routes>
-      <Route path="/" element={<MovieList />} />
-      <Route path="/tv-shows" element={<TVShows />} />
-      <Route path="/movie-details/:movieId" element={<MovieDetails />} />
-    </Routes>
-  </Router>;
+
   return (
     <div>
       <MyNavbar />
